@@ -10,18 +10,26 @@ export default class GotService {
         }
         return await res.json();
     }
-    getAllCharacters() {
-        return this.getResource('/characters?page=5&pageSize=10');
+
+    getAllBooks() { // всего 12 книг
+        return this.getResource('/books?page=1');
+    }
+    getBook(id) {
+        return this.getResource(`/books/${id}`);
+    }
+
+    getAllCharacters() { // всего 214 страниц (2134 персонажа)
+        return this.getResource('/characters?page=214&pageSize=10');
     }
     getCharacter(id) {
         return this.getResource(`/characters/${id}`);
     }
+
+    getAllHouses() { // всего 45 страниц (444 дома)
+        return this.getResource('/houses?page=45');
+    }
+    getHouse(id) {
+        return this.getResource(`/houses/${id}`);
+    }
 }
 
-// const got = new GotService();
-// got.getAllCharacters()
-//     .then(res => {
-//         res.forEach(item => console.log(item.name));
-//     });
-// got.getCharacter(130)
-//     .then(res => console.log(res));
