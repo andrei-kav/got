@@ -9,10 +9,10 @@ import ErrorMessage from "../errorMessage";
 export default class RandomChar extends Component {
     constructor() {
         super();
-
         this.updateChar = this.updateChar.bind(this);
 
         this.updateChar();
+        setInterval(this.updateChar, 5000);
 
     }
 
@@ -23,6 +23,7 @@ export default class RandomChar extends Component {
         loading: true,
         error: false
     };
+
 
     onCharLoaded(char) {
         this.setState({
@@ -38,6 +39,7 @@ export default class RandomChar extends Component {
     }
     updateChar() {
         const id = Math.floor(Math.random()*2137 + 1);
+        // const id = 12300000;
         this.gotService.getCharacter(id)
             .then(res => this.onCharLoaded(res))
             .catch((err) => this.onError(err));
