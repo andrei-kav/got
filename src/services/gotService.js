@@ -11,25 +11,60 @@ export default class GotService {
         return await res.json();
     }
 
-    getAllBooks() { // всего 12 книг
-        return this.getResource('/books?page=1');
+    async getAllBooks() { // всего 12 книг
+        const res = await this.getResource('/books?page=1');
+        return res.map(this._transformBook);
     }
-    getBook(id) {
-        return this.getResource(`/books/${id}`);
-    }
-
-    getAllCharacters() { // всего 214 страниц (2134 персонажа)
-        return this.getResource('/characters?page=214&pageSize=10');
-    }
-    getCharacter(id) {
-        return this.getResource(`/characters/${id}`);
+    async getBook(id) {
+        const book = await this.getResource(`/books/${id}`);
+        return this._transformBook(book);
     }
 
-    getAllHouses() { // всего 45 страниц (444 дома)
-        return this.getResource('/houses?page=45');
+    async getAllCharacters() { // всего 214 страниц (2134 персонажа)
+        const res = await this.getResource('/characters?page=214&pageSize=10');
+        return res.map(this._transformCharacter);
     }
-    getHouse(id) {
-        return this.getResource(`/houses/${id}`);
+    async getCharacter(id) {
+        const char = await this.getResource(`/characters/${id}`);
+        return this._transformCharacter(char);
+    }
+
+    async getAllHouses() { // всего 45 страниц (444 дома)
+        const res = await this.getResource('/houses?page=45');
+        return res.map(this._transformHouse);
+    }
+    async getHouse(id) {
+        const house = await this.getResource(`/houses/${id}`);
+        return this._transformHouse(house);
+    }
+
+    // функции для оптимизации работы со стейтом компонентов
+    _transformCharacter(char) {
+        return {
+            name: char.name,
+            gender: char.gender,
+            born: char.born,
+            died: char.died,
+            culture: char.culture
+        }
+    }
+    _transformHouse(house) {
+        return {
+            name: house.name,
+            region: house.region,
+            words: house.words,
+            titles: house.titles,
+            overlord: house.overlord,
+            ancestralWeapons: house.ancestralWeapons
+        }
+    }
+    _transformBook(book) {
+        return {
+            name: book.name,
+            numberOfPages: book.numberOfPages,
+            publisher: book.publisher,
+            released: book.released
+        }
     }
 }
 
