@@ -21,7 +21,7 @@ export default class GotService {
     }
 
     async getAllCharacters() { // всего 214 страниц (2134 персонажа)
-        const res = await this.getResource('/characters?page=214&pageSize=10');
+        const res = await this.getResource('/characters?page=5&pageSize=10');
         return res.map(this._transformCharacter);
     }
     async getCharacter(id) {

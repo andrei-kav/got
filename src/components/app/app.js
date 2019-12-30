@@ -3,8 +3,8 @@ import { Col, Row, Container, Button } from 'reactstrap';
 
 import Header from '../header';
 import RandomChar from '../randomChar';
-import ItemList from '../itemList';
-import CharDetails from '../charDetails';
+import ErrorMessage from "../errorMessage";
+import CharacterPage from "../characterPage";
 
 import './app.css';
 
@@ -18,9 +18,17 @@ export default class App extends Component {
 
     state = {
         hideRandomChar: false,
+        error: false
     };
     hideRandomChar = 'hide Random Character component';
     showRandomChar = 'show Random Character component';
+
+    componentDidCatch() {
+        console.log('error has been');
+        this.setState({
+            error:true
+        })
+    }
 
     onToggleRandomChar() {
         this.setState({
@@ -34,6 +42,10 @@ export default class App extends Component {
         const randomChar = !hideRandomChar ? <RandomChar/> : null;
         const randomCharButtonText = !hideRandomChar ? this.hideRandomChar : this.showRandomChar;
 
+        if (this.state.error) {
+            return <ErrorMessage />
+        }
+
         return (
             <>
                 <Container>
@@ -46,14 +58,7 @@ export default class App extends Component {
                             {randomChar}
                         </Col>
                     </Row>
-                    <Row>
-                        <Col md='6'>
-                            <ItemList />
-                        </Col>
-                        <Col md='6'>
-                            <CharDetails />
-                        </Col>
-                    </Row>
+                    <CharacterPage />
                 </Container>
             </>
         );
