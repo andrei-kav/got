@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import './errorMessage.css';
 
-const ErrorMessage = () => {
-    return (
-        <>
-            <img src={require('./img/error-01.jpg')} alt="error"/>
-            <span>Something goes wrong</span>
-        </>
-    )
-};
+export default class ErrorMessage extends Component {
 
-export default ErrorMessage;
+    render() {
+        const { errStatus } = this.props;
+        return (
+            <>
+                <img src={require(`./img/error${errStatus}.jpg`)} alt="error"/>
+                <span>Something goes wrong {errStatus}</span>
+            </>
+        )
+    }
+}
+
 
