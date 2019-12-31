@@ -24,7 +24,7 @@ export default class App extends Component {
     showRandomChar = 'show Random Character component';
 
     componentDidCatch() {
-        console.log('error has been');
+        console.log('error app');
         this.setState({
             error:true
         })

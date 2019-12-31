@@ -8,6 +8,7 @@ export default class GotService {
         if (!res.ok) {
             throw {
                 status: res.status,
+                // status: 345,
                 text: new Error(`Could not fetch ${url}, received ${res.status}`)
             };
         }

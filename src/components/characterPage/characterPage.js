@@ -16,8 +16,9 @@ export default class CharacterPage extends Component {
     state = {
         selectedChar: 130,
         error: false
-    }
+    };
     componentDidCatch() {
+        console.log('error charPage')
         this.setState({
             error:true
         })
