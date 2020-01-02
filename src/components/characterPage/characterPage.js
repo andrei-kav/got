@@ -7,14 +7,15 @@ import ErrorMessage from "../errorMessage";
 
 export default class CharacterPage extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.onCharSelected = this.onCharSelected.bind(this);
+        this.onError = this.props.onError.bind(this);
     }
 
     state = {
-        selectedChar: 130,
+        selectedChar: null,
         error: false,
         errorStatus: null
     };
@@ -25,6 +26,7 @@ export default class CharacterPage extends Component {
         })
     }
     onCharSelected(id) {
+        console.log(id);
         this.setState({
             selectedChar: id
         })
@@ -39,10 +41,10 @@ export default class CharacterPage extends Component {
         return (
             <Row>
                 <Col md='6'>
-                    <ItemList onCharSelected={this.onCharSelected} />
+                    <ItemList onCharSelected={this.onCharSelected} onError={this.props.onError}/>
                 </Col>
                 <Col md='6'>
-                    <CharDetails charId={this.state.selectedChar} />
+                    <CharDetails charId={this.state.selectedChar} onError={this.props.onError}/>
                 </Col>
             </Row>
         )

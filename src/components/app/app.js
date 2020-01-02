@@ -30,6 +30,13 @@ export default class App extends Component {
         })
     }
 
+    onError(err) {
+        this.setState({
+            error: true,
+            errorStatus: err.status
+        });
+    }
+
     onToggleRandomChar() {
         this.setState({
             hideRandomChar: !this.state.hideRandomChar
@@ -39,7 +46,7 @@ export default class App extends Component {
     render() {
 
         const { hideRandomChar } = this.state;
-        const randomChar = !hideRandomChar ? <RandomChar/> : null;
+        const randomChar = !hideRandomChar ? <RandomChar onError={this.onError}/> : null;
         const randomCharButtonText = !hideRandomChar ? this.hideRandomChar : this.showRandomChar;
 
         if (this.state.error) {
@@ -58,7 +65,7 @@ export default class App extends Component {
                             {randomChar}
                         </Col>
                     </Row>
-                    <CharacterPage />
+                    <CharacterPage onError={this.onError}/>
                 </Container>
             </>
         );

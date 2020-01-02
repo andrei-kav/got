@@ -7,22 +7,23 @@ import Spinner from "../spinner";
 import ErrorMessage from "../errorMessage";
 
 export default class RandomChar extends Component {
-    constructor() {
-        super();
-        this.updateChar = this.updateChar.bind(this);
+    constructor(props) {
+        super(props);
 
+        this.updateChar = this.updateChar.bind(this);
+        this.onError = this.props.onError.bind(this);
     }
 
     gotService = new GotService();
+
     state = {
         char: {},
-        loading: true,
         error: false,
         errorStatus: null
     };
     componentDidMount() {
         this.updateChar();
-        this.timerId = setInterval(this.updateChar, 1500);
+        this.timerId = setInterval(this.updateChar, 6000);
     }
     componentWillUnmount() {
         clearInterval(this.timerId);
@@ -36,20 +37,15 @@ export default class RandomChar extends Component {
 
     onCharLoaded(char) {
         this.setState({
-            char,
-            loading: false
+            char
         })
     }
-    onError(err) {
-        this.setState({
-            error: true,
-            errorStatus: err.status,
-            loading: false
-        });
-        clearInterval(this.timerId);
-    }
+    noCharsId = [
+        1509, 1510, 1511, 1995
+    ];
     updateChar() {
-        const id = Math.floor(Math.random()*2137 + 1);
+        let id = Math.floor(Math.random()*2137 + 1);
+        id = this.noCharsId.indexOf(id) > -1 ? Math.floor(Math.random()*2137 + 1) : id;
         // const id = 12300000;
         this.gotService.getCharacter(id)
             .then(res => this.onCharLoaded(res))
@@ -57,12 +53,13 @@ export default class RandomChar extends Component {
     }
 
     render() {
-        const { char, loading, error, errorStatus } = this.state;
+        const { char, error, errorStatus } = this.state;
         const onUpdateChar = this.updateChar;
 
+        if (error) clearInterval(this.timerId);
         const errorMessage = error ? <ErrorMessage errStatus={ errorStatus }/> : null;
-        const spinner = loading ? <Spinner /> : null;
-        const content = !(loading || error) ? <View char={char} onUpdateChar={onUpdateChar}/> : null;
+        const spinner = !(Object.keys(char).length || error) ? <Spinner /> : null;
+        const content = !(error || spinner) ? <View char={char} onUpdateChar={onUpdateChar}/> : null;
 
         return (
             <div className="random-block rounded">

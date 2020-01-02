@@ -13,10 +13,9 @@ export default class ErrorMessage extends Component {
         let errText = this.processedErrStatuses.indexOf(errStatus) > -1 ? errStatus : 'unknown';
         errStatus = errStatus ? errStatus : errText;
 
-
         return (
             <>
-                <img src={require(`./img/error${errText}.jpg`)} alt="error"/>
+                <img className='img-error' src={require(`./img/error${errText}.jpg`)} alt="error"/>
                 <span>Something goes wrong. Error status - {errStatus}</span>
             </>
         )

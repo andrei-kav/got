@@ -45,11 +45,12 @@ export default class GotService {
     // функции для оптимизации работы со стейтом компонентов
     _transformCharacter(char) {
         return {
-            name: char.name,
-            gender: char.gender,
-            born: char.born,
-            died: char.died,
-            culture: char.culture
+            id: char.url.split('/')[char.url.split('/').length - 1],
+            name: char.name || 'no data',
+            gender: char.gender || 'no data',
+            born: char.born || 'no data',
+            died: char.died || 'no data',
+            culture: char.culture || 'no data'
         }
     }
     _transformHouse(house) {
