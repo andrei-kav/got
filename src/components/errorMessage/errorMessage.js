@@ -4,12 +4,19 @@ import './errorMessage.css';
 
 export default class ErrorMessage extends Component {
 
+    processedErrStatuses = [
+        404, 408, 410
+    ];
+
     render() {
-        let { errStatus } = this.props;
+        let errStatus = this.props.errStatus;
+        let errText = this.processedErrStatuses.indexOf(errStatus) > -1 ? errStatus : 'unknown';
+        errStatus = errStatus ? errStatus : errText;
+
 
         return (
             <>
-                <img src={require(`./img/error${errStatus}.jpg`)} alt="error"/>
+                <img src={require(`./img/error${errText}.jpg`)} alt="error"/>
                 <span>Something goes wrong. Error status - {errStatus}</span>
             </>
         )

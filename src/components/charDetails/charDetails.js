@@ -6,6 +6,7 @@ import './charDetails.css';
 export default class CharDetails extends Component {
 
     gotService = new GotService();
+
     state = {
         char: null
     };

@@ -17,7 +17,8 @@ export default class RandomChar extends Component {
     state = {
         char: {},
         loading: true,
-        error: false
+        error: false,
+        errorStatus: null
     };
     componentDidMount() {
         this.updateChar();
@@ -41,7 +42,8 @@ export default class RandomChar extends Component {
     }
     onError(err) {
         this.setState({
-            error: err.status,
+            error: true,
+            errorStatus: err.status,
             loading: false
         });
         clearInterval(this.timerId);
@@ -55,10 +57,10 @@ export default class RandomChar extends Component {
     }
 
     render() {
-        const { char, loading, error } = this.state;
+        const { char, loading, error, errorStatus } = this.state;
         const onUpdateChar = this.updateChar;
 
-        const errorMessage = error ? <ErrorMessage errStatus={ typeof error == 'number' ? error : 'unknown' }/> : null;
+        const errorMessage = error ? <ErrorMessage errStatus={ errorStatus }/> : null;
         const spinner = loading ? <Spinner /> : null;
         const content = !(loading || error) ? <View char={char} onUpdateChar={onUpdateChar}/> : null;
 
