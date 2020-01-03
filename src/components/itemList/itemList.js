@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import GotService from "../../services/gotService";
+
 import Spinner from "../spinner";
 import ErrorMessage from "../errorMessage";
 
@@ -14,8 +14,6 @@ export default class ItemList extends Component {
         this.onError = this.props.onError.bind(this);
     }
 
-    gotService = new GotService();
-
     // в state храним список персонажей
     state = {
         error: false,
@@ -24,10 +22,12 @@ export default class ItemList extends Component {
     };
 
     componentDidMount() {
-        this.gotService.getAllCharacters()
-            .then((charList) => {
+        const { getData } = this.props;
+
+        getData()
+            .then((itemList) => {
                 this.setState({
-                    charList
+                    itemList
                 })
             })
             .catch((err) => this.onError(err));
@@ -35,22 +35,25 @@ export default class ItemList extends Component {
 
     _renderItem(arr) {
         return arr.map((item, i) => {
+            const { id } = item;
+            const label = this.props.renderItem(item);
+
             return (
-                <li key={item.id}
+                <li key={id}
                     className="list-group-item"
-                    onClick={ () => this.props.onCharSelected(item.id) }>
-                    {item.name}
+                    onClick={ () => this.props.onItemSelected(id) }>
+                    {label}
                 </li>
             )
         })
     }
 
     render() {
-        const { charList, error, errorStatus } = this.state;
+        const { itemList, error, errorStatus } = this.state;
 
         const errorMessage = error ? <ErrorMessage errStatus={ errorStatus }/> : null;
-        const spinner = !(charList || error) ? <Spinner /> : null;
-        const items = !(error || spinner) ? this._renderItem(charList) : null;
+        const spinner = !(itemList || error) ? <Spinner /> : null;
+        const items = !(error || spinner) ? this._renderItem(itemList) : null;
 
         return (
             <ul className="item-list list-group">

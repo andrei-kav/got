@@ -1,3 +1,6 @@
 .btn-outline-warning {
     margin: 0 0 10px;
 }
+.no-item-data {
+    color: red;
+}

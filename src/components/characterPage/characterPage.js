@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import { Col, Row } from 'reactstrap';
+import GotService from "../../services/gotService";
 
 import ItemList from '../itemList';
-import CharDetails from '../charDetails';
+import CharDetails, { Field } from '../charDetails';
 import ErrorMessage from "../errorMessage";
+import RowBlock from "../rowBlock";
 
 export default class CharacterPage extends Component {
 
     constructor(props) {
         super(props);
 
-        this.onCharSelected = this.onCharSelected.bind(this);
+        this.onItemSelected = this.onItemSelected.bind(this);
         this.onError = this.props.onError.bind(this);
     }
+
+    gotService = new GotService();
 
     state = {
         selectedChar: null,
@@ -25,8 +28,7 @@ export default class CharacterPage extends Component {
             error: true
         })
     }
-    onCharSelected(id) {
-        console.log(id);
+    onItemSelected(id) {
         this.setState({
             selectedChar: id
         })
@@ -38,15 +40,24 @@ export default class CharacterPage extends Component {
             return <ErrorMessage />
         }
 
+        const itemList = (
+            <ItemList onItemSelected={this.onItemSelected}
+                      onError={this.props.onError}
+                      getData={this.gotService.getAllCharacters}
+                      renderItem={({ name, gender }) => `${name} (${gender})`}/>
+        );
+        const charDetails = (
+            <CharDetails charId={this.state.selectedChar}
+                         onError={this.props.onError} >
+                <Field field='gender' label='Gender'/>
+                <Field field='born' label='Born'/>
+                <Field field='died' label='Died'/>
+                <Field field='culture' label='Culture'/>
+            </CharDetails>
+        );
+
         return (
-            <Row>
-                <Col md='6'>
-                    <ItemList onCharSelected={this.onCharSelected} onError={this.props.onError}/>
-                </Col>
-                <Col md='6'>
-                    <CharDetails charId={this.state.selectedChar} onError={this.props.onError}/>
-                </Col>
-            </Row>
+            <RowBlock left={itemList} right={charDetails} />
         )
     }
 }
