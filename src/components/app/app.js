@@ -5,9 +5,12 @@ import GotService from "../../services/gotService";
 import Header from '../header';
 import RandomChar from '../randomChar';
 import ErrorMessage from "../errorMessage";
-import CharacterPage from "../characterPage";
-import ItemList from "../itemList";
-import CharDetails from "../charDetails";
+
+// import ItemList from "../pages/itemList";
+// import ItemDetails from "../pages/itemDetails";
+import CharactersPage from "../pages/charactersPage";
+import HousesPage from "../pages/housesPage";
+import BooksPage from "../pages/booksPage";
 
 import './app.css';
 
@@ -70,8 +73,10 @@ export default class App extends Component {
                             {randomChar}
                         </Col>
                     </Row>
-                    <CharacterPage onError={this.onError}/>
-                    <Row>
+                    <CharactersPage onError={this.onError} />
+                    <HousesPage onError={this.onError} />
+                    <BooksPage onError={this.onError} />
+                    {/*<Row>
                         <Col md='6'>
                             <ItemList onItemSelected={this.onItemSelected}
                                       getData={this.gotService.getAllBooks}
@@ -79,11 +84,11 @@ export default class App extends Component {
                                       onError={this.onError} />
                         </Col>
                         <Col md='6'>
-                            <CharDetails charId={this.state.selectedChar}
+                            <ItemDetails charId={this.state.selectedChar}
                                          onError={this.onError} />
                         </Col>
-                    </Row>
-                    <Row>
+                    </Row>*/}
+                    {/*<Row>
                         <Col md='6'>
                             <ItemList onItemSelected={this.onItemSelected}
                                       getData={this.gotService.getAllHouses}
@@ -91,10 +96,10 @@ export default class App extends Component {
                                       onError={this.onError} />
                         </Col>
                         <Col md='6'>
-                            <CharDetails charId={this.state.selectedChar}
+                            <ItemDetails charId={this.state.selectedChar}
                                          onError={this.onError} />
                         </Col>
-                    </Row>
+                    </Row>*/}
                 </Container>
             </>
         );

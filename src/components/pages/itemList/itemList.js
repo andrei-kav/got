@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-import Spinner from "../spinner";
-import ErrorMessage from "../errorMessage";
+import Spinner from "../../spinner";
+import ErrorMessage from "../../errorMessage";
 
 import './itemList.css';
 
@@ -18,7 +18,7 @@ export default class ItemList extends Component {
     state = {
         error: false,
         errorStatus: null,
-        charList: null
+        itemList: null
     };
 
     componentDidMount() {
@@ -34,7 +34,7 @@ export default class ItemList extends Component {
     }
 
     _renderItem(arr) {
-        return arr.map((item, i) => {
+        return arr.map((item) => {
             const { id } = item;
             const label = this.props.renderItem(item);
 

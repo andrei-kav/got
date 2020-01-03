@@ -45,8 +45,12 @@ export default class GotService {
     };
 
     isSet(data) {
-        if (data) {
-            return data;
+        const dataStr = data.toString();
+        if (dataStr.length > 1) {
+            if (typeof data == 'number') {
+                return data;
+            }
+            return dataStr;
         } else {
             return (
                 <span className="no-item-data">no data</span>
