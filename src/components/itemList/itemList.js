@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-import Spinner from "../../spinner";
-import ErrorMessage from "../../errorMessage";
+import Spinner from "../spinner";
+import ErrorMessage from "../errorMessage";
 
 import './itemList.css';
 

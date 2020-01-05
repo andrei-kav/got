@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import GotService from "../../../services/gotService";
+import GotService from "../../services/gotService";
 
-import ErrorMessage from "../../errorMessage";
+import ErrorMessage from "../errorMessage";
 import ItemList from '../itemList';
 import ItemDetails, { Field } from '../itemDetails';
 import RowBlock from "../rowBlock";
 
-export default class HousesPage extends Component {
+export default class CharactersPage extends Component {
 
     constructor(props) {
         super(props);
@@ -22,12 +22,12 @@ export default class HousesPage extends Component {
         errorStatus: null
     };
     componentDidCatch(info) {
-        console.log('error houusePage');
+        console.log('error charPage');
         this.setState({
             error: true
         })
     }
-    _itemDetailText = 'Please select a house from list';
+    _itemDetailText = 'Please select a character from list';
     onItemSelected(id) {
         this.setState({
             selectedId: id
@@ -43,19 +43,18 @@ export default class HousesPage extends Component {
         const itemList = (
             <ItemList onItemSelected={this.onItemSelected}
                       onError={this.props.onError}
-                      getData={this.gotService.getAllHouses}
-                      renderItem={({ name, region }) => `${name} (${region})`} />
+                      getData={this.gotService.getAllCharacters}
+                      renderItem={({ name, gender }) => `${name} (${gender})`} />
         );
         const itemDetails = (
             <ItemDetails itemId={this.state.selectedId}
                          onError={this.props.onError}
-                         getData={this.gotService.getHouse}
+                         getData={this.gotService.getCharacter}
                          itemDetailText={this._itemDetailText} >
-                <Field field='region' label='Region'/>
-                <Field field='words' label='Words'/>
-                <Field field='titles' label='Titles'/>
-                <Field field='overlord' label='Overlord'/>
-                <Field field='ancestralWeapons' label='Ancestral Weapons'/>
+                <Field field='gender' label='Gender'/>
+                <Field field='born' label='Born'/>
+                <Field field='died' label='Died'/>
+                <Field field='culture' label='Culture'/>
             </ItemDetails>
         );
 

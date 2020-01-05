@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import GotService from "../../../services/gotService";
 
-import Spinner from "../../spinner";
-import ErrorMessage from "../../errorMessage";
+import Spinner from "../spinner";
+import ErrorMessage from "../errorMessage";
 
 import './itemDetails.css';
 
@@ -26,8 +25,6 @@ export default class ItemDetails extends Component {
 
         this.onError = this.props.onError.bind(this);
     }
-
-    gotService = new GotService();
 
     state = {
         error: false,
@@ -79,14 +76,13 @@ export default class ItemDetails extends Component {
         const { itemDetailText } = this.props;
 
         const errorMessage = error ? <ErrorMessage errStatus={ errorStatus }/> : null;
-        const spinner = !(item || error) ? <>
-            <div className='select-error'>{itemDetailText}</div>
-            <Spinner />
-            </> : null;
+        const spinner = !(item || error)
+            ? <><div className='select-error'>{itemDetailText}</div><Spinner /></>
+            : null;
         const itemView = !(error || spinner) ? this._renderItem(item) : null;
 
         return (
-            <div className="char-details rounded">
+            <div className="item-details rounded">
                 {errorMessage}
                 {spinner}
                 {itemView}
