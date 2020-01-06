@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Col, Row, Container, Button } from 'reactstrap';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Header from '../header';
 import RandomChar from '../randomChar';
 import ErrorMessage from "../errorMessage";
+import Page404 from "../page404";
 
 import { CharactersPage, HousesPage, BooksPage, BooksItem } from '../pages';
 
@@ -68,20 +69,28 @@ export default class App extends Component {
                                 {randomChar}
                             </Col>
                         </Row>
-
-                        <Route path='/characters' exact ><CharactersPage onError={this.onError} /></Route>
-                        <Route path='/houses' exact ><HousesPage onError={this.onError} /></Route>
-                        <Route path='/books' exact ><BooksPage onError={this.onError} /></Route>
-                        <Route path='/books/:id' render={
-                            ({ match, location, history }) => {
-                                console.log(match);
-                                console.log(location);
-                                console.log(history);
-                                const { id } = match.params;
-                                return <BooksItem bookId={id} onError={this.onError} />
-                            }
-                        }/>
-
+                        <Switch>
+                            <Route path='/' exact />
+                            <Route path='/characters' exact ><CharactersPage onError={this.onError} /></Route>
+                            <Route path='/houses' exact ><HousesPage onError={this.onError} /></Route>
+                            <Route path='/books' exact ><BooksPage onError={this.onError} /></Route>
+                            <Route path='/books/:id' render={
+                                ({ match, location, history }) => {
+                                    console.log(match);
+                                    console.log(location);
+                                    console.log(history);
+                                    const { id } = match.params;
+                                    return <BooksItem bookId={id} onError={this.onError} />
+                                }
+                            }/>
+                            <Route render={
+                                ({ location, history }) =>
+                                    <Page404 url={location.pathname}
+                                             goBack={() => history.goBack()}
+                                             goHome={() => history.push('/')}
+                                    />
+                            }/>
+                        </Switch>
                     </Container>
                 </div>
             </Router>

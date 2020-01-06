@@ -15,7 +15,7 @@ export default class ErrorMessage extends Component {
 
         return (
             <>
-                <img className='img-error' src={require(`./img/error${errText}.jpg`)} alt="error"/>
+                <img className='img-error' src={require(`./img/error${errText}.jpg`)} alt="error" />
                 <span>Something goes wrong. Error status - {errStatus}</span>
             </>
         )
