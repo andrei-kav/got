@@ -11,7 +11,7 @@ export default class ItemList extends Component {
     constructor(props) {
         super(props);
 
-        this.onError = this.props.onError.bind(this);
+        this.onError = this.props.onError;
     }
 
     // в state храним список персонажей
@@ -41,7 +41,8 @@ export default class ItemList extends Component {
             return (
                 <li key={id}
                     className="list-group-item"
-                    onClick={ () => this.props.onItemSelected(id) }>
+                    onClick={ () => this.props.onItemSelected(id) }
+                >
                     {label}
                 </li>
             )

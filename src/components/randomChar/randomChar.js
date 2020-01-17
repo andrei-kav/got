@@ -12,7 +12,7 @@ export default class RandomChar extends Component {
         super(props);
 
         this.updateChar = this.updateChar.bind(this);
-        this.onError = this.props.onError.bind(this);
+        this.onError = this.props.onError;
     }
 
     gotService = new GotService();
@@ -24,7 +24,7 @@ export default class RandomChar extends Component {
     };
     componentDidMount() {
         this.updateChar();
-        this.timerId = setInterval(this.updateChar, 6000);
+        this.timerId = setInterval(this.updateChar, 2000);
     }
     componentWillUnmount() {
         clearInterval(this.timerId);

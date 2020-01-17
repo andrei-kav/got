@@ -68,11 +68,6 @@ export default class GotService {
             born: this.isSet(char.born),
             died: this.isSet(char.died),
             culture: this.isSet(char.culture)
-            // name: char.name || 'no data',
-            // gender: char.gender || 'no data',
-            // born: char.born || 'no data',
-            // died: char.died || 'no data',
-            // culture: char.culture || 'no data'
         }
     };
     _transformHouse = (house) => {
